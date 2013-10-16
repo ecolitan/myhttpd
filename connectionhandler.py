@@ -1,7 +1,12 @@
 import socket
+import threading
+
+# http://ilab.cs.byu.edu/python/threadingmodule.html
+# http://ilab.cs.byu.edu/python/code/echoclient-select.py
 
 class ConnectionHandler:
-    """Create socket.
+    """
+    Create socket.
     listen for incoming connections
     create requesthandler and pass it connection
     cleanup connection at end

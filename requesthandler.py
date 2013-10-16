@@ -9,9 +9,15 @@ class RequestHandler:
         self.config = config
         self.request = request
         self.response = HttpResponse()
-        
         self.full_request_path = os.path.join(self.config.document_root,
             self.request.request_uri[1:])
+            
+        self.generate_test_response()
+        self.construct_response()
+        
+    def return_response(self):
+        """return the response object"""
+        return self.response
         
     def path_lookup(self):
         """Return list of files in request path
@@ -53,8 +59,9 @@ class RequestHandler:
         return file_info
         
     def construct_response(self):
-        """look at request and constraints and build the response."""
+        """Look at request and constraints and build the response."""
         pass
+        
         
         
 ###############################################################################
@@ -69,7 +76,7 @@ class RequestHandler:
         self.response.headers['Server'] = 'myhttpd/0.01'
         self.response.headers['Last-Modified'] = strftime(
             "%a, %d %b %Y %H:%M:%S +0200 GMT", gmtime(file_info.st_mtime))
-        self.response.headers['ETag'] = '1'
+        self.response.headers['ETag'] = '2'
         self.response.headers['Accept-Ranges'] = 'bytes'
         self.response.headers['Content-Length'] = str(file_info.st_size)
         self.response.headers['Vary'] = 'Accept-Encoding'

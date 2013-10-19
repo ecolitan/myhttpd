@@ -27,14 +27,12 @@ class RequestHandler:
     def path_lookup(self):
         """Return list of files in request path"""
         if os.path.isfile(self.full_request_path):
-            #TODO when file doesnt exist, set return code
             files = [self.full_request_path]
         elif os.path.isdir(self.full_request_path):
             files= [os.path.join(self.full_request_path, _file) for _file in os.listdir(self.full_request_path)]
         else:
-            print "what kind of file is that!?"
-            raise Exception
-            #TODO proper error here. 5xx Server misconfigured
+            #TODO update response with 404 File not found
+            files = []
         
         return files
         

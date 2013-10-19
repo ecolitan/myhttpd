@@ -6,6 +6,9 @@ import threading
 from httprequest import HttpRequest
 from requesthandler import RequestHandler
 
+# http://ilab.cs.byu.edu/python/threadingmodule.html
+# http://ilab.cs.byu.edu/python/code/echoclient-select.py
+
 class HttpdServer:
     def __init__(self, config):
         self.config = config
@@ -67,6 +70,8 @@ class ClientThread(threading.Thread):
         while running:
             data = self.client.recv(self.size)
             if data:
+                # TODO post method data?
+                # TODO 101 continue
                 self.request_queue += data
                 self.process_request()
             else:
@@ -86,9 +91,9 @@ class ClientThread(threading.Thread):
             request = self.pop_next_request()
             request_obj = HttpRequest(request)
             response = RequestHandler(self.config, request_obj).return_response()
-            reply_headers = response.generate_response_headers()
             self.client.send(response.generate_response_headers())
             self.client.send(response.generate_response_body())
+            self.client.close()
         
     def pop_next_request(self):
         """Return first request in request queue

@@ -4,6 +4,7 @@ import sys
 
 from vhostconfig import VhostConfig
 from connectionmanager import HttpdServer, ClientThread
+from tests.requesthandler_test import TestRequestHandler
 
 def main():
     
@@ -12,9 +13,10 @@ def main():
     #~ g_config.host = 'localhost'
     g_config.host = ''
     g_config.port = 8080
-    g_config.document_root = "www"
+    g_config.document_root = "/home/aaron/projects/myhttpd/www"
     g_config.directory_index = "index.html"
-    g_config.request_max_length = 4096
+    g_config.request_max_size = 8192
+    g_config.post_max_size = 8192
     g_config.connection_timeout = 5
     g_config.connection_buffer_size = 2048
     g_config.connection_backlog = 5
@@ -25,3 +27,4 @@ def main():
     
 if __name__ == "__main__":
     main()
+

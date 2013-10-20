@@ -10,18 +10,21 @@ class HttpResponse:
         self.headers = {}
         self.request_headers = []
         self.resource = None
+        self.status_code = ''
+        self.status_text = ''
         
-    def print_response_headers(self):
-        print self.generate_response_headers()
-        print self.generate_response_body()
-    
     def generate_response_headers(self):
         """Return final response header string
         Put headers in the correct order
         Put correct return status
         """
         
-        # First line is the status code
+        # First line is the status
+        # e.g. HTTP/1.1 200 OK
+        status_line = '{0} {1} {2}\r\n'.format(self.HTTPVersion,
+                                               self.status_code,
+                                               self.status_text)
+        
         response_headers = self.status + '\r\n'
         
         # These headers need some sorting logic

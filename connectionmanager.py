@@ -78,12 +78,6 @@ class ClientThread(threading.Thread):
                 self.client.close()
                 running = False
                 
-    def print_request_queue(self):
-        """Print whole request queue"""
-        
-        print self.request_queue
-        return None
-        
     def process_request(self):
         """Attempt to generate an HttpRequest object from request_queue"""
         

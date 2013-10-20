@@ -41,7 +41,10 @@ class RequestHandler:
         files: list of absolute paths
         return str index
         """
-        if len(files) == 1:
+        if len(files) == 0:
+            index = None
+            #TODO update response with 404 File not found
+        elif len(files) == 1:
             index = files[0]
         else:
             for _file in files:
@@ -49,7 +52,6 @@ class RequestHandler:
                     index = _file
                     break
                 else:
-                    print "No index found!"
                     #TODO show dir listing maybe?
                     raise Exception
                 
@@ -104,7 +106,6 @@ class RequestHandler:
         resource_info = self.stat_file(resource)
         resource_content_type, resource_content_encoding = mimetypes.guess_type(resource, strict=True)
         
-        print "assign resource", resource
         self.response.resource = resource
         self.response.status = 'HTTP/1.1 200 OK'
         #TODO generate correctly.
@@ -114,7 +115,6 @@ class RequestHandler:
         self.response.headers['Content-Length'] = self.generate_content_length_header(resource_info)
         self.response.headers['Last-Modified'] = self.generate_last_modififed_header(resource_info)
         self.response.headers['Connection'] = 'close' 
-        self.response.print_response_headers()
         return True
         
     def handle_request_errors(self):

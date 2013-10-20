@@ -38,27 +38,11 @@ class HttpRequest:
         
         self.parse_request()
         
-        #~ self.print_method_string()
-        #~ self.print_headers()
-        
     def __str__(self):
         return str(self.request)
         
     def __repr__(self):
         return self.__str__()
-        
-    # Debugging/Logging functions
-    def print_complete(self):
-        print repr(self.request)
-        return None
-        
-    def print_method_string(self):
-        print self.request_method, self.request_uri, self.request_version
-        return None
-        
-    def print_headers(self):
-        print str(self.headers)
-        return None
         
     def parse_request(self):
         '''Determine request method and request headers'''

@@ -13,21 +13,21 @@ class HttpResponse:
         self.status_code = ''
         self.status_text = ''
         
+    def generate_status_code(self):
+        """Generate the status code"""
+        #TODO pass request errors straight along.
+        status_line = '{0} {1} {2}\r\n'.format(self.HTTPVersion,
+                                               self.status_code,
+                                               self.status_text)
+        return status_line
+        
     def generate_response_headers(self):
         """Return final response header string
         Put headers in the correct order
         Put correct return status
         """
-        
-        # First line is the status
-        # e.g. HTTP/1.1 200 OK
-        status_line = '{0} {1} {2}\r\n'.format(self.HTTPVersion,
-                                               self.status_code,
-                                               self.status_text)
-        
-        response_headers = self.status + '\r\n'
-        
-        # These headers need some sorting logic
+        #TODO These headers need some sorting logic
+        response_headers = ''
         for _header in self.headers.keys():
             response_headers += _header + ': ' + self.headers[_header] + '\r\n'
         response_headers += '\r\n'
@@ -48,11 +48,6 @@ class HttpResponse:
             return None
             #TODO implement other methods
         
-    def generate_status_code(self):
-        """Generate the status code"""
-        
-        # pass request errors straight along.
-        if self.request_error:
-            return self.HTTPVersion + ' ' + str(self.request_error) + '\r\n'
+
             
         

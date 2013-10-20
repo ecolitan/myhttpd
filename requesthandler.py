@@ -107,13 +107,17 @@ class RequestHandler:
         resource_content_type, resource_content_encoding = mimetypes.guess_type(resource, strict=True)
         
         self.response.resource = resource
-        self.response.status = 'HTTP/1.1 200 OK'
-        #TODO generate correctly.
+        
+        #TODO Generate status_code and status_text properly, implement a method
+        #to determine this.
+        self.response.status_code = '200'
+        self.response.status_text = 'OK'
         if self.check_content_type(resource_content_type):
             self.response.headers['Content-Type'] = resource_content_type
         self.response.headers['Date'] = self.generate_date_header()
         self.response.headers['Content-Length'] = self.generate_content_length_header(resource_info)
         self.response.headers['Last-Modified'] = self.generate_last_modififed_header(resource_info)
+        #TODO Set Connection header correctly 
         self.response.headers['Connection'] = 'close' 
         return True
         
@@ -128,7 +132,6 @@ class RequestHandler:
                 self.response.request_error = error
                 request_status = 'fatal'
                 return request_status
-            #~ elif error in []:
             
     def check_content_type(self, resource_content_type):
         """Check if Client content type matches resource

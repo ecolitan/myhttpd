@@ -49,7 +49,7 @@ class HttpdServer:
                     junk = sys.stdin.readline()
                     running = 0
         # close all threads
-        self.server.close()
+        #~ self.server.close()
         for c in self.threads:
             c.join()
 
@@ -85,6 +85,8 @@ class ClientThread(threading.Thread):
             request = self.pop_next_request()
             request_obj = HttpRequest(request)
             response = RequestHandler(self.config, request_obj).return_response()
+            
+            self.client.send(response.generate_status_code())
             self.client.send(response.generate_response_headers())
             self.client.send(response.generate_response_body())
             self.client.close()

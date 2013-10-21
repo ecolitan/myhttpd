@@ -103,6 +103,13 @@ class RequestHandler:
         """Processing for GET Reqest Method"""
         files_in_uri_path = self.path_lookup()
         resource = self.find_index(files_in_uri_path)
+        
+        if resource == None:
+            self.response.status_code = '404'
+            self.response.status_text = 'Not Found'
+            return True
+        
+        
         resource_info = self.stat_file(resource)
         resource_content_type, resource_content_encoding = mimetypes.guess_type(resource, strict=True)
         
